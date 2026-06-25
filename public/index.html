@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"/>
+  <title>Palm Cocktails Bar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Cinzel:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --terra:   #8b2800;
+      --terra2:  #a83200;
+      --brown:   #2a0e00;
+      --brown2:  #3d1a08;
+      --amber:   #e8a020;
+      --amber2:  #f5c842;
+      --cream:   #fff0d0;
+      --cream2:  #ffe8b8;
+      --neon-pink:   #ff4db8;
+      --neon-green:  #39ff88;
+      --neon-yellow: #f5e642;
+      --sand:    #c4956a;
+      --overlay: rgba(30,5,0,0.75);
+    }
+
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'Inter',sans-serif;
+      background:var(--brown);
+      color:var(--cream);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+
+    /* ── HERO ── */
+    .hero{
+      position:relative;
+      min-height:320px;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      padding:48px 24px 36px;
+      text-align:center;
+      overflow:hidden;
+      background:radial-gradient(ellipse 80% 60% at 50% 0%, #6b1800 0%, var(--brown) 70%);
+    }
+    /* Subtle texture dots */
+    .hero::before{
+      content:'';position:absolute;inset:0;
+      background-image:radial-gradient(circle,rgba(232,160,32,0.07) 1px,transparent 1px);
+      background-size:28px 28px;pointer-events:none;
+    }
+    /* Neon corner glows */
+    .hero::after{
+      content:'';position:absolute;inset:0;
+      background:
+        radial-gradient(ellipse 30% 20% at 5% 95%, rgba(255,77,184,0.18) 0%,transparent 70%),
+        radial-gradient(ellipse 25% 18% at 95% 5%,  rgba(57,255,136,0.12) 0%,transparent 70%);
+      pointer-events:none;
+    }
+
+    /* Palm leaf decorations */
+    .palm-left,.palm-right{
+      position:absolute;top:0;font-size:120px;opacity:0.07;
+      pointer-events:none;user-select:none;line-height:1;
+    }
+    .palm-left{left:-20px;transform:rotate(-20deg);}
+    .palm-right{right:-20px;transform:rotate(20deg) scaleX(-1);}
+
+    .logo-ring{
+      position:relative;
+      width:110px;height:110px;
+      border-radius:50%;
+      border:2px solid var(--amber);
+      box-shadow:0 0 0 4px rgba(232,160,32,0.15), 0 0 30px rgba(232,160,32,0.2);
+      overflow:hidden;
+      margin-bottom:18px;
+      animation:popIn .6s cubic-bezier(.34,1.56,.64,1) both;
+      flex-shrink:0;
+    }
+    .logo-ring img{width:100%;height:100%;object-fit:cover;}
+    @keyframes popIn{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+
+    .hero-title{
+      font-family:'Playfair Display',serif;
+      font-size:clamp(34px,8vw,54px);
+      color:var(--amber2);
+      letter-spacing:0.02em;
+      line-height:1.05;
+      animation:fadeUp .5s .15s ease both;
+      text-shadow:0 2px 20px rgba(232,160,32,0.3);
+    }
+    .hero-sub{
+      font-family:'Cinzel',serif;
+      font-size:clamp(10px,2.5vw,13px);
+      color:var(--sand);
+      letter-spacing:0.3em;
+      text-transform:uppercase;
+      margin-top:6px;
+      animation:fadeUp .5s .25s ease both;
+    }
+    .hero-badges{
+      display:flex;gap:12px;margin-top:14px;flex-wrap:wrap;justify-content:center;
+      animation:fadeUp .5s .35s ease both;
+    }
+    .neon-badge{
+      padding:5px 14px;border-radius:6px;font-size:11px;font-weight:600;
+      letter-spacing:0.12em;text-transform:uppercase;
+    }
+    .nb-pink{border:1.5px solid var(--neon-pink);color:var(--neon-pink);box-shadow:0 0 8px rgba(255,77,184,0.3);}
+    .nb-green{border:1.5px solid var(--neon-green);color:var(--neon-green);box-shadow:0 0 8px rgba(57,255,136,0.25);}
+
+    @keyframes fadeUp{from{transform:translateY(14px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+    /* ── SEARCH ── */
+    .search-wrap{padding:14px 18px 0;animation:fadeUp .5s .4s ease both;}
+    .search-box{position:relative;max-width:500px;margin:0 auto;}
+    .search-box input{
+      width:100%;padding:12px 44px 12px 18px;
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(232,160,32,0.3);
+      border-radius:50px;color:var(--cream);
+      font-size:15px;font-family:'Inter',sans-serif;outline:none;
+      transition:border-color .2s,background .2s;
+    }
+    .search-box input::placeholder{color:rgba(255,240,208,0.35);}
+    .search-box input:focus{border-color:rgba(232,160,32,.7);background:rgba(255,255,255,.09);}
+    .search-icon{position:absolute;right:15px;top:50%;transform:translateY(-50%);font-size:17px;pointer-events:none;}
+    .search-results{
+      max-width:500px;margin:6px auto 0;
+      background:#2a0e00f5;border:1px solid rgba(232,160,32,0.2);
+      border-radius:14px;overflow:hidden;display:none;
+    }
+    .search-results.active{display:block;}
+    .sr-item{
+      padding:11px 16px;border-bottom:1px solid rgba(255,255,255,0.05);
+      cursor:pointer;transition:background .15s;
+      display:flex;justify-content:space-between;align-items:center;
+    }
+    .sr-item:last-child{border-bottom:none;}
+    .sr-item:hover{background:rgba(255,255,255,0.05);}
+    .sr-name{font-weight:500;font-size:14px;}
+    .sr-cat{font-size:11px;color:var(--sand);margin-top:2px;}
+    .sr-price{color:var(--amber);font-size:14px;font-weight:600;white-space:nowrap;margin-left:8px;}
+
+    /* ── TABS ── */
+    .tabs-outer{
+      position:sticky;top:0;z-index:100;
+      background:rgba(20,5,0,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(232,160,32,0.15);
+    }
+    .tabs{display:flex;gap:2px;overflow-x:auto;padding:10px 14px;scrollbar-width:none;}
+    .tabs::-webkit-scrollbar{display:none;}
+    .tab{
+      display:flex;flex-direction:column;align-items:center;gap:2px;
+      padding:7px 14px;border-radius:50px;border:1px solid transparent;
+      cursor:pointer;white-space:nowrap;transition:all .2s;
+      background:transparent;color:rgba(255,240,208,0.45);
+      font-family:'Inter',sans-serif;
+    }
+    .tab-icon{font-size:17px;}
+    .tab-label{font-size:10px;font-weight:500;letter-spacing:0.05em;}
+    .tab:hover{background:rgba(232,160,32,0.1);color:var(--amber2);}
+    .tab.active{background:rgba(232,160,32,0.15);border-color:rgba(232,160,32,0.4);color:var(--amber2);}
+    /* Reviews tab special */
+    .tab.tab-reviews.active{background:rgba(255,77,184,0.12);border-color:rgba(255,77,184,0.4);color:var(--neon-pink);}
+    .tab.tab-reviews:hover{background:rgba(255,77,184,0.08);color:var(--neon-pink);}
+
+    /* ── MAIN ── */
+    .main{padding:0 16px 80px;max-width:600px;margin:0 auto;}
+
+    /* ── CATEGORY SECTION ── */
+    .category-section{scroll-margin-top:76px;padding-top:36px;}
+    .cat-header{display:flex;align-items:center;gap:10px;margin-bottom:4px;}
+    .cat-icon-big{font-size:26px;line-height:1;}
+    .cat-name{
+      font-family:'Playfair Display',serif;
+      font-size:clamp(22px,5vw,28px);
+      color:var(--amber2);line-height:1;
+    }
+    .cat-desc{
+      font-family:'Playfair Display',serif;font-style:italic;
+      font-size:13px;color:var(--sand);margin-bottom:16px;padding-left:36px;
+    }
+    /* Decorative divider */
+    .cat-divider{
+      display:flex;align-items:center;gap:10px;margin-bottom:18px;
+    }
+    .cat-divider-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(232,160,32,0.4),transparent);}
+    .cat-divider-leaf{font-size:14px;opacity:.7;}
+
+    /* ── ITEMS ── */
+    .items-list{display:flex;flex-direction:column;}
+    .menu-item{
+      display:flex;justify-content:space-between;align-items:flex-start;
+      padding:15px 0;border-bottom:1px solid rgba(255,255,255,0.05);
+      cursor:pointer;transition:all .18s;position:relative;
+      border-radius:6px;margin:0 -6px;padding-left:6px;padding-right:6px;
+    }
+    .menu-item:last-child{border-bottom:none;}
+    .menu-item:hover{background:rgba(232,160,32,0.06);}
+    .menu-item:active{transform:scale(.99);}
+    .item-info{flex:1;min-width:0;padding-right:14px;}
+    .item-name{
+      font-weight:500;font-size:15px;color:var(--cream);
+      display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+    }
+    .item-desc{
+      font-family:'Playfair Display',serif;font-style:italic;
+      font-size:13px;color:rgba(255,240,208,0.5);margin-top:3px;
+    }
+    .item-price{
+      font-weight:700;font-size:16px;color:var(--amber);
+      white-space:nowrap;flex-shrink:0;
+    }
+    .price-curr{font-size:10px;font-weight:400;color:rgba(232,160,32,0.6);margin-left:2px;}
+
+    /* Tags */
+    .tag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:20px;}
+    .tag-popular{background:rgba(232,160,32,0.18);color:var(--amber2);border:1px solid rgba(232,160,32,0.3);}
+    .tag-signature{background:rgba(255,77,184,0.15);color:#ff99d8;border:1px solid rgba(255,77,184,0.3);}
+
+    /* ── DRAWER ── */
+    .drawer-overlay{
+      position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:200;
+      opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(4px);
+    }
+    .drawer-overlay.open{opacity:1;pointer-events:all;}
+    .drawer{
+      position:fixed;bottom:0;left:0;right:0;
+      background:linear-gradient(180deg,#4a1600 0%,#2a0a00 100%);
+      border-radius:24px 24px 0 0;
+      border-top:1px solid rgba(232,160,32,0.35);
+      padding:8px 24px 44px;z-index:201;
+      transform:translateY(100%);
+      transition:transform .35s cubic-bezier(.32,.72,0,1);
+      max-height:72vh;overflow-y:auto;
+    }
+    .drawer.open{transform:translateY(0);}
+    .drawer-handle{width:40px;height:4px;background:rgba(255,255,255,.18);border-radius:2px;margin:12px auto 20px;}
+    .drawer-cat{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--amber);margin-bottom:8px;}
+    .drawer-name{font-family:'Playfair Display',serif;font-size:28px;color:var(--amber2);margin-bottom:6px;line-height:1.1;}
+    .drawer-desc{font-family:'Playfair Display',serif;font-style:italic;font-size:16px;color:var(--sand);line-height:1.6;margin-bottom:20px;}
+    .drawer-price-row{display:flex;align-items:baseline;gap:6px;padding:14px 0;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);}
+    .drawer-price{font-size:36px;font-weight:700;color:var(--amber);}
+    .drawer-curr{font-size:14px;color:rgba(232,160,32,.6);}
+    .btn-close{
+      width:100%;margin-top:18px;padding:14px;
+      background:rgba(232,160,32,0.12);border:1px solid rgba(232,160,32,0.3);
+      border-radius:50px;color:var(--amber2);font-size:14px;
+      font-family:'Inter',sans-serif;font-weight:500;letter-spacing:.05em;
+      cursor:pointer;transition:background .2s;
+    }
+    .btn-close:hover{background:rgba(232,160,32,.22);}
+
+    /* ── REVIEWS SECTION ── */
+    #section-reviews{scroll-margin-top:76px;padding-top:36px;}
+    .reviews-header{
+      text-align:center;padding-bottom:20px;
+      border-bottom:1px solid rgba(232,160,32,0.15);margin-bottom:24px;
+    }
+    .reviews-title{
+      font-family:'Playfair Display',serif;font-size:28px;color:var(--amber2);margin-bottom:4px;
+    }
+    .reviews-avg{font-size:14px;color:var(--sand);}
+    .stars-display{color:var(--amber);font-size:20px;letter-spacing:2px;margin:6px 0;}
+
+    /* Review cards */
+    .review-card{
+      background:rgba(255,255,255,0.04);border:1px solid rgba(232,160,32,0.1);
+      border-radius:14px;padding:16px;margin-bottom:12px;
+      animation:fadeUp .4s ease both;
+    }
+    .review-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;}
+    .review-name{font-weight:600;font-size:14px;color:var(--cream);}
+    .review-date{font-size:11px;color:rgba(255,240,208,.35);}
+    .review-stars{color:var(--amber);font-size:14px;margin-bottom:6px;}
+    .review-text{font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:rgba(255,240,208,.75);line-height:1.6;}
+
+    /* Write review form */
+    .write-review{
+      background:rgba(255,77,184,0.06);
+      border:1px solid rgba(255,77,184,0.2);
+      border-radius:16px;padding:20px;margin-top:24px;
+    }
+    .wr-title{font-family:'Playfair Display',serif;font-size:20px;color:var(--neon-pink);margin-bottom:16px;text-align:center;}
+    .form-row{margin-bottom:14px;}
+    .form-label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--sand);margin-bottom:6px;display:block;}
+    .form-input{
+      width:100%;padding:11px 16px;
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(232,160,32,0.2);
+      border-radius:10px;color:var(--cream);font-size:14px;
+      font-family:'Inter',sans-serif;outline:none;
+      transition:border-color .2s;
+    }
+    .form-input:focus{border-color:rgba(255,77,184,.5);}
+    .form-input::placeholder{color:rgba(255,240,208,.3);}
+    textarea.form-input{min-height:90px;resize:vertical;line-height:1.5;}
+
+    /* Star rating picker */
+    .star-picker{display:flex;gap:6px;margin-top:4px;}
+    .star-btn{font-size:28px;cursor:pointer;transition:transform .15s;opacity:.4;background:none;border:none;padding:0;}
+    .star-btn.lit{opacity:1;}
+    .star-btn:hover{transform:scale(1.2);}
+
+    .btn-submit{
+      width:100%;padding:14px;margin-top:6px;
+      background:linear-gradient(135deg,rgba(255,77,184,0.3),rgba(255,77,184,0.15));
+      border:1px solid rgba(255,77,184,0.5);
+      border-radius:50px;color:var(--neon-pink);
+      font-size:14px;font-family:'Inter',sans-serif;font-weight:600;
+      letter-spacing:.06em;cursor:pointer;transition:all .2s;
+      box-shadow:0 0 12px rgba(255,77,184,0.15);
+    }
+    .btn-submit:hover{background:linear-gradient(135deg,rgba(255,77,184,0.4),rgba(255,77,184,0.25));box-shadow:0 0 20px rgba(255,77,184,0.25);}
+    .btn-submit:disabled{opacity:.5;cursor:not-allowed;}
+    .form-msg{text-align:center;font-size:13px;padding:8px;margin-top:8px;border-radius:8px;}
+    .form-msg.ok{background:rgba(57,255,136,0.1);color:var(--neon-green);}
+    .form-msg.err{background:rgba(255,80,80,0.1);color:#ff8080;}
+
+    /* Char counter */
+    .char-count{font-size:11px;color:rgba(255,240,208,.35);text-align:right;margin-top:4px;}
+    .char-count.warn{color:#ff9966;}
+
+    /* ── FOOTER ── */
+    .footer{text-align:center;padding:28px 24px 20px;border-top:1px solid rgba(232,160,32,0.1);}
+    .footer-brand{font-family:'Playfair Display',serif;font-size:18px;color:var(--amber);margin-bottom:4px;}
+    .footer-loc{font-size:12px;color:rgba(255,240,208,.35);letter-spacing:.1em;}
+
+    /* ── SCROLL TOP ── */
+    .scroll-top{
+      position:fixed;bottom:22px;right:18px;width:42px;height:42px;
+      background:var(--amber);color:var(--brown);border:none;border-radius:50%;
+      font-size:17px;cursor:pointer;opacity:0;transform:translateY(8px);
+      transition:all .3s;z-index:99;display:flex;align-items:center;justify-content:center;
+      box-shadow:0 4px 16px rgba(232,160,32,0.4);
+    }
+    .scroll-top.visible{opacity:1;transform:translateY(0);}
+
+    /* ── LOADING ── */
+    .loading{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:35vh;gap:14px;color:var(--sand);}
+    .spinner{width:34px;height:34px;border:3px solid rgba(232,160,32,.2);border-top-color:var(--amber);border-radius:50%;animation:spin .8s linear infinite;}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* ── TOAST ── */
+    .toast{
+      position:fixed;bottom:72px;left:50%;transform:translateX(-50%) translateY(16px);
+      background:rgba(30,5,0,0.96);border:1px solid rgba(232,160,32,.3);
+      color:var(--cream);padding:9px 20px;border-radius:50px;
+      font-size:13px;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;z-index:300;
+    }
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+    @media(min-width:480px){.hero{padding:56px 40px 40px;}.main{padding:0 24px 80px;}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="palm-left">🌴</div>
+  <div class="palm-right">🌴</div>
+  <div class="logo-ring">
+    <img src="/logo.jpg" alt="Palm Cocktails Bar" onerror="this.parentElement.style.display='none'"/>
+  </div>
+  <h1 class="hero-title">Palm Cocktails</h1>
+  <p class="hero-sub">Cocktails Bar · Saranda</p>
+  <div class="hero-badges">
+    <span class="neon-badge nb-pink">All drinks to go</span>
+    <span class="neon-badge nb-green">Take away only</span>
+  </div>
+</header>
+
+<!-- SEARCH -->
+<div class="search-wrap">
+  <div class="search-box">
+    <input type="text" id="search-input" placeholder="Search cocktails, shots…" autocomplete="off"/>
+    <span class="search-icon">🔍</span>
+    <div class="search-results" id="search-results"></div>
+  </div>
+</div>
+
+<!-- TABS -->
+<nav class="tabs-outer">
+  <div class="tabs" id="tabs"></div>
+</nav>
+
+<!-- MAIN -->
+<main class="main" id="main">
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <span>Loading menu…</span>
+  </div>
+  <div id="menu-sections"></div>
+
+  <!-- REVIEWS SECTION -->
+  <section id="section-reviews">
+    <div class="reviews-header">
+      <div class="stars-display" id="avg-stars">★★★★★</div>
+      <h2 class="reviews-title">Guest Reviews</h2>
+      <p class="reviews-avg" id="avg-text">Loading reviews…</p>
+    </div>
+    <div id="reviews-list"></div>
+    <!-- Write a review -->
+    <div class="write-review">
+      <p class="wr-title">Leave a Review</p>
+      <div class="form-row">
+        <label class="form-label" for="r-name">Your name</label>
+        <input class="form-input" type="text" id="r-name" placeholder="e.g. Arta M." maxlength="40"/>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Rating</label>
+        <div class="star-picker" id="star-picker">
+          <button class="star-btn" data-v="1">★</button>
+          <button class="star-btn" data-v="2">★</button>
+          <button class="star-btn" data-v="3">★</button>
+          <button class="star-btn" data-v="4">★</button>
+          <button class="star-btn" data-v="5">★</button>
+        </div>
+      </div>
+      <div class="form-row">
+        <label class="form-label" for="r-text">Your review</label>
+        <textarea class="form-input" id="r-text" placeholder="Tell us about your experience at Palm…" maxlength="300"></textarea>
+        <div class="char-count" id="char-count">0 / 300</div>
+      </div>
+      <button class="btn-submit" id="btn-submit">Send Review ✨</button>
+      <div class="form-msg" id="form-msg" style="display:none"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-brand">🌴 Palm Cocktails Bar</div>
+  <div class="footer-loc">Boulevard · Saranda, Albania</div>
+</footer>
+
+<!-- DRAWER -->
+<div class="drawer-overlay" id="overlay"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-handle"></div>
+  <div id="drawer-content"></div>
+  <button class="btn-close" id="drawer-close">Close</button>
+</div>
+
+<button class="scroll-top" id="scroll-top" aria-label="Back to top">↑</button>
+<div class="toast" id="toast"></div>
+
+<script>
+const API = '/api';
+let menuData = null;
+let searchDebounce = null;
+let selectedRating = 0;
+
+// ── INIT ──────────────────────────────────────────────────
+async function init() {
+  try {
+    const res = await fetch(`${API}/menu`);
+    menuData = await res.json();
+    renderTabs();
+    renderMenu();
+    document.getElementById('loading').style.display = 'none';
+  } catch(e) {
+    document.getElementById('loading').innerHTML = '<p style="color:var(--sand)">Could not load menu. Refresh the page.</p>';
+  }
+  loadReviews();
+  setupReviewForm();
+}
+
+// ── TABS ──────────────────────────────────────────────────
+function renderTabs() {
+  const c = document.getElementById('tabs');
+  menuData.categories.forEach((cat, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'tab' + (i === 0 ? ' active' : '');
+    btn.dataset.id = cat.id;
+    btn.innerHTML = `<span class="tab-icon">${cat.icon}</span><span class="tab-label">${cat.name.split(' ')[0]}</span>`;
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(`section-${cat.id}`)?.scrollIntoView({behavior:'smooth',block:'start'});
+    });
+    c.appendChild(btn);
+  });
+  // Reviews tab
+  const rBtn = document.createElement('button');
+  rBtn.className = 'tab tab-reviews';
+  rBtn.dataset.id = 'reviews';
+  rBtn.innerHTML = `<span class="tab-icon">⭐</span><span class="tab-label">Reviews</span>`;
+  rBtn.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    rBtn.classList.add('active');
+    document.getElementById('section-reviews')?.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+  c.appendChild(rBtn);
+}
+
+// ── MENU ──────────────────────────────────────────────────
+function renderMenu() {
+  const container = document.getElementById('menu-sections');
+  container.innerHTML = '';
+  menuData.categories.forEach(cat => {
+    const sec = document.createElement('section');
+    sec.className = 'category-section';
+    sec.id = `section-${cat.id}`;
+    sec.innerHTML = `
+      <div class="cat-header">
+        <span class="cat-icon-big">${cat.icon}</span>
+        <h2 class="cat-name">${cat.name}</h2>
+      </div>
+      <p class="cat-desc">${cat.description}</p>
+      <div class="cat-divider">
+        <div class="cat-divider-line"></div>
+        <span class="cat-divider-leaf">🌿</span>
+        <div class="cat-divider-line"></div>
+      </div>
+      <div class="items-list" id="items-${cat.id}"></div>
+    `;
+    container.appendChild(sec);
+    const list = sec.querySelector(`#items-${cat.id}`);
+    cat.items.forEach(item => list.appendChild(makeItemEl(item, cat)));
+  });
+  setupScrollSpy();
+}
+
+function makeItemEl(item, cat) {
+  const el = document.createElement('div');
+  el.className = 'menu-item';
+  const tags = (item.tags||[]).map(t => `<span class="tag tag-${t}">${t}</span>`).join('');
+  el.innerHTML = `
+    <div class="item-info">
+      <div class="item-name">${item.name}${tags}</div>
+      <div class="item-desc">${item.description}</div>
+    </div>
+    <div class="item-price">${item.price.toLocaleString()}<span class="price-curr">ALL</span></div>
+  `;
+  el.addEventListener('click', () => openDrawer(item, cat));
+  return el;
+}
+
+// ── DRAWER ────────────────────────────────────────────────
+function openDrawer(item, cat) {
+  const tags = (item.tags||[]).map(t=>`<span class="tag tag-${t}" style="font-size:11px;padding:3px 10px">${t}</span>`).join(' ');
+  document.getElementById('drawer-content').innerHTML = `
+    <div class="drawer-cat">${cat.icon} ${cat.name}</div>
+    <div class="drawer-name">${item.name} ${tags}</div>
+    <div class="drawer-desc">${item.description}</div>
+    <div class="drawer-price-row">
+      <span class="drawer-price">${item.price.toLocaleString()}</span>
+      <span class="drawer-curr">ALL</span>
+    </div>
+  `;
+  document.getElementById('overlay').classList.add('open');
+  document.getElementById('drawer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeDrawer() {
+  document.getElementById('overlay').classList.remove('open');
+  document.getElementById('drawer').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('overlay').addEventListener('click', closeDrawer);
+document.getElementById('drawer-close').addEventListener('click', closeDrawer);
+
+// ── SEARCH ────────────────────────────────────────────────
+const searchInput = document.getElementById('search-input');
+const searchResults = document.getElementById('search-results');
+searchInput.addEventListener('input', () => {
+  clearTimeout(searchDebounce);
+  const q = searchInput.value.trim();
+  if (!q) { searchResults.classList.remove('active'); return; }
+  searchDebounce = setTimeout(async () => {
+    const res = await fetch(`${API}/search?q=${encodeURIComponent(q)}`);
+    const data = await res.json();
+    if (!data.length) {
+      searchResults.innerHTML = '<div class="sr-item"><span class="sr-name" style="color:var(--sand)">No results</span></div>';
+    } else {
+      searchResults.innerHTML = data.slice(0,6).map(r =>
+        `<div class="sr-item" data-cat="${r.categoryId}" data-id="${r.id}">
+          <div><div class="sr-name">${r.name}</div><div class="sr-cat">${r.category}</div></div>
+          <div class="sr-price">${r.price.toLocaleString()} ALL</div>
+        </div>`
+      ).join('');
+      searchResults.querySelectorAll('.sr-item').forEach(el => {
+        el.addEventListener('click', () => {
+          const cat = menuData.categories.find(c => c.id === el.dataset.cat);
+          const item = cat?.items.find(i => i.id === parseInt(el.dataset.id));
+          if (cat && item) {
+            searchInput.value = '';
+            searchResults.classList.remove('active');
+            document.getElementById(`section-${cat.id}`)?.scrollIntoView({behavior:'smooth'});
+            setTimeout(() => openDrawer(item, cat), 400);
+          }
+        });
+      });
+    }
+    searchResults.classList.add('active');
+  }, 200);
+});
+document.addEventListener('click', e => { if (!e.target.closest('.search-box')) searchResults.classList.remove('active'); });
+
+// ── SCROLL SPY ────────────────────────────────────────────
+function setupScrollSpy() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id.replace('section-', '');
+        document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.id === id));
+        document.querySelector(`.tab[data-id="${id}"]`)?.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+      }
+    });
+  }, { rootMargin:'-25% 0px -65% 0px' });
+  document.querySelectorAll('.category-section, #section-reviews').forEach(s => obs.observe(s));
+}
+
+// ── REVIEWS ───────────────────────────────────────────────
+async function loadReviews() {
+  try {
+    const res = await fetch(`${API}/reviews`);
+    const reviews = await res.json();
+    renderReviews(reviews);
+  } catch(e) {}
+}
+
+function renderReviews(reviews) {
+  const list = document.getElementById('reviews-list');
+  if (!reviews.length) {
+    list.innerHTML = '<p style="color:var(--sand);text-align:center;padding:20px 0">No reviews yet — be the first! 🌴</p>';
+    return;
+  }
+  const avg = reviews.reduce((s,r) => s + r.rating, 0) / reviews.length;
+  document.getElementById('avg-stars').textContent = '★'.repeat(Math.round(avg)) + '☆'.repeat(5-Math.round(avg));
+  document.getElementById('avg-text').textContent = `${avg.toFixed(1)} out of 5 · ${reviews.length} review${reviews.length !== 1 ? 's' : ''}`;
+
+  list.innerHTML = reviews.map(r => `
+    <div class="review-card">
+      <div class="review-top">
+        <span class="review-name">${escHtml(r.name)}</span>
+        <span class="review-date">${r.date}</span>
+      </div>
+      <div class="review-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div>
+      <div class="review-text">"${escHtml(r.text)}"</div>
+    </div>
+  `).join('');
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── REVIEW FORM ────────────────────────────────────────────
+function setupReviewForm() {
+  // Star picker
+  const stars = document.querySelectorAll('.star-btn');
+  stars.forEach(btn => {
+    btn.addEventListener('click', () => {
+      selectedRating = parseInt(btn.dataset.v);
+      stars.forEach(s => s.classList.toggle('lit', parseInt(s.dataset.v) <= selectedRating));
+    });
+    btn.addEventListener('mouseover', () => {
+      const v = parseInt(btn.dataset.v);
+      stars.forEach(s => s.classList.toggle('lit', parseInt(s.dataset.v) <= v));
+    });
+    btn.addEventListener('mouseout', () => {
+      stars.forEach(s => s.classList.toggle('lit', parseInt(s.dataset.v) <= selectedRating));
+    });
+  });
+
+  // Char counter
+  const textArea = document.getElementById('r-text');
+  const charCount = document.getElementById('char-count');
+  textArea.addEventListener('input', () => {
+    const len = textArea.value.length;
+    charCount.textContent = `${len} / 300`;
+    charCount.classList.toggle('warn', len > 250);
+  });
+
+  // Submit
+  document.getElementById('btn-submit').addEventListener('click', async () => {
+    const name = document.getElementById('r-name').value.trim();
+    const text = document.getElementById('r-text').value.trim();
+    const msg = document.getElementById('form-msg');
+
+    if (!name) { showMsg('Please enter your name', 'err'); return; }
+    if (!selectedRating) { showMsg('Please select a rating ★', 'err'); return; }
+    if (!text) { showMsg('Please write something about your experience', 'err'); return; }
+
+    const btn = document.getElementById('btn-submit');
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    try {
+      const res = await fetch(`${API}/reviews`, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ name, rating: selectedRating, text })
+      });
+      if (!res.ok) throw new Error();
+      document.getElementById('r-name').value = '';
+      document.getElementById('r-text').value = '';
+      charCount.textContent = '0 / 300';
+      selectedRating = 0;
+      document.querySelectorAll('.star-btn').forEach(s => s.classList.remove('lit'));
+      showMsg('Thank you! Your review has been posted 🌴', 'ok');
+      loadReviews();
+    } catch(e) {
+      showMsg('Something went wrong. Please try again.', 'err');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Send Review ✨';
+    }
+  });
+
+  function showMsg(text, type) {
+    const el = document.getElementById('form-msg');
+    el.textContent = text;
+    el.className = `form-msg ${type}`;
+    el.style.display = 'block';
+    setTimeout(() => { el.style.display='none'; }, 4000);
+  }
+}
+
+// ── SCROLL TOP ────────────────────────────────────────────
+const scrollBtn = document.getElementById('scroll-top');
+window.addEventListener('scroll', () => scrollBtn.classList.toggle('visible', window.scrollY > 300));
+scrollBtn.addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeDrawer(); });
+
+init();
+</script>
+</body>
+</html>
